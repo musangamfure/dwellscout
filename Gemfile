@@ -5,6 +5,7 @@ ruby "3.2.4"
 
 
 gem "bootsnap", require: false
+gem 'devise', '~> 4.9', '>= 4.9.3'
 gem "importmap-rails"
 gem "jbuilder"
 
@@ -28,3 +29,5 @@ group :development do
   gem "web-console"
 end
 
+
+gem "tailwindcss-rails", "~> 2.6"
