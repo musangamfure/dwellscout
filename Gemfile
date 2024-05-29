@@ -6,10 +6,11 @@ ruby "3.2.4"
 
 gem "bootsnap", require: false
 gem 'devise', '~> 4.9', '>= 4.9.3'
+gem 'faker'
 gem "importmap-rails"
 gem "jbuilder"
 
-
+gem 'money-rails', '~> 1.12'
 gem "rails", "~> 7.1.3", ">= 7.1.3.3"
 gem "sprockets-rails"
 gem "stimulus-rails"
