@@ -8,6 +8,7 @@ gem "bootsnap", require: false
 gem 'devise', '~> 4.9', '>= 4.9.3'
 gem 'faker'
 gem "importmap-rails"
+gem "image_processing", ">= 1.2"
 gem "jbuilder"
 
 gem 'money-rails', '~> 1.12'
