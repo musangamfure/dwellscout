@@ -4,8 +4,6 @@ import { enter, leave, toggle } from "el-transition";
 export default class extends Controller {
   static targets = ["dropdown", "openUserProfileMenu"];
   connect() {
-    console.log("Hello, Stimulus!");
-
     this.openUserProfileMenuTarget.addEventListener("click", () => {
       openDropdown(this.dropdownTarget);
     });
