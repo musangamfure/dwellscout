@@ -4,8 +4,13 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  
+
          has_many :wishlists, dependent: :destroy
          has_many :wishlited_properties, through: :wishlists, source: :property, dependent: :destroy
          has_many :reservations, dependent: :destroy
          has_many :reserved_properties, through: :reservations , source: :property, dependent: :destroy
+         validates :name,:address_1, :city, :state, :country, presence: true
+         has_one_attached :picture
+   
 end

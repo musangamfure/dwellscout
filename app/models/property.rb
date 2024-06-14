@@ -5,11 +5,11 @@ class Property < ApplicationRecord
     has_many :wishlisted_users, through: :wishlists, source: :user, dependent: :destroy
     has_many :reservations, dependent: :destroy
     has_many :reserved_users, through: :reservations , source: :user, dependent: :destroy
+    has_rich_text :description
+    has_many :property_amenities, dependent: :destroy
+    has_many :amenities, through: :property_amenities, source: :amenity, dependent: :destroy
 
-    # has_many :wishlisted_users, through: :wishlists, source: :user, dependent: :destroy
-
-
-    # name, headline, description, address_1, address_2, city, state, country
+    
     validates :name, :headline, :description, :address_1, :city, :state, :country, presence: true
    
     monetize :price_cents, allow_nil: true
@@ -29,11 +29,6 @@ class Property < ApplicationRecord
         next_reservation = reservations.upcoming_reservations.first
         current_reservation = reservations.current_reservations.first
 
-        # 1. next -> nil and current -> nil
-        # 2. 4.  next -> available and current -> nil
-        # 3. next -> nil and current -> available
-        # 5. next -> available and current -> available
-
         if current_reservation.nil? && next_reservation.nil?
             Date.tomorrow.strftime('%e %b')..(Date.tomorrow + 30.days).strftime('%e %b')
         elsif current_reservation.nil? 
@@ -45,4 +40,28 @@ class Property < ApplicationRecord
         end 
 
       end
+
+      def average_cleanliness_rating
+        reviews.average(:cleanliness_rating)
+    end
+
+    def average_accuracy_rating
+        reviews.average(:accuracy_rating)
+     end
+
+    def average_communication_rating
+        reviews.average(:communication_rating)
+    end
+
+    def average_checkin_rating
+        reviews.average(:checkin_rating)
+    end
+
+    def average_location_rating
+        reviews.average(:location_rating)
+    end
+
+    def average_value_rating
+    reviews.average(:value_rating)
+    end
 end
