@@ -8,7 +8,55 @@ description = <<-DESCRIPTION
 <p>Entire Property is yours!! Wish you fun and happy stay!!</p>
 DESCRIPTION
 
-user = User.first || User.create!(email: 'example@example.com', password: 'password')
+
+amenity1 = Amenity.create!(name: 'Kitchen')
+amenity1.icon.attach(io: File.open("app/assets/images/amenity_icons/kitchen.svg"), filename: amenity1.name)
+
+amenity2 = Amenity.create!(name: 'Private pool')
+amenity2.icon.attach(io: File.open("app/assets/images/amenity_icons/private_pool.svg"), filename: amenity2.name)
+
+amenity3 = Amenity.create!(name: 'Wifi')
+amenity3.icon.attach(io: File.open("app/assets/images/amenity_icons/wifi.svg"), filename: amenity3.name)
+
+amenity4 = Amenity.create!(name: 'Esssentials', description: 'Towels, bed sheets, soap and toilet paper')
+amenity4.icon.attach(io: File.open("app/assets/images/amenity_icons/essentials.svg"), filename: amenity4.name)
+
+
+
+
+pictures =[]
+20.times do |i|
+  pictures << URI.parse(Faker::LoremFlickr.image).open 
+end
+
+user =  User.create!({
+  email: 'test1@gmail.com',
+ password: '123456',
+ name: Faker::Lorem.unique.sentence(word_count: 3),
+ address_1: Faker::Address.street_address,
+ address_2: Faker::Address.street_name,
+ city: Faker::Address.city,
+ state: Faker::Address.state,
+ country: Faker::Address.country,
+
+})
+
+user.picture.attach(io: pictures[0], filename: user.name )
+
+19.times do |i|
+  random_user = User.create!({
+    email: "test#{i+2}@gmail.com",
+    password: '123456',
+    name: Faker::Lorem.unique.sentence(word_count: 3),
+    address_1: Faker::Address.street_address,
+    address_2: Faker::Address.street_name,
+    city: Faker::Address.city,
+    state: Faker::Address.state,
+    country: Faker::Address.country,
+  })
+  random_user.picture.attach(io: pictures[i+1], filename: random_user.name )
+end
+
 
 6.times do |i|
   property = Property.create!({
@@ -26,6 +74,7 @@ user = User.first || User.create!(email: 'example@example.com', password: 'passw
     bed_count: Faker::Number.between(from: 4, to: 10),
     bathroom_count: Faker::Number.between(from: 1, to: 5),
   })
+
 
   property.images.attach(io: File.open("db/images/property_#{i + 1}.png"), filename: property.name)
   property.images.attach(io: File.open("db/images/property_7.png"), filename: property.name)
@@ -45,7 +94,7 @@ user = User.first || User.create!(email: 'example@example.com', password: 'passw
       location_rating: (1..5).to_a.sample,
       value_rating: (1..5).to_a.sample,
       property: property,
-      user: user
+      user: User.all.sample
     })
   end
 end
